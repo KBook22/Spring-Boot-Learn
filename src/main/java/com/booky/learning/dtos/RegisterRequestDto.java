@@ -1,15 +1,14 @@
 package com.booky.learning.dtos;
 
-import jakarta.validation.constraints.NotBlank;
-
-public class UserDto {
+public class RegisterRequestDto {
     private String username;
-    @NotBlank(message = "Email is Required!!")
     private String email;
+    private String password;
 
-    public UserDto(String username, String email) {
+    public RegisterRequestDto(String username, String email, String password) {
         this.username = username;
         this.email = email;
+        this.password = password;
     }
 
     public String getUsername() {
@@ -24,7 +23,15 @@ public class UserDto {
         return email;
     }
 
-    public void setEmail(String email) {
+    public  void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
