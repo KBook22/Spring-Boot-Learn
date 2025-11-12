@@ -1,6 +1,9 @@
 package com.booky.learning.controllers;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -30,5 +33,12 @@ public class GlobalExceptionHandler {
         Map<String, String> errors = new HashMap<>();
         errors.put("message",e.getReason());
         return ResponseEntity.status(e.getStatusCode()).body(errors);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Map<String,String>> handleDataIntegrityViolationException(DataIntegrityViolationException e) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message","Email already exists");
+        return ResponseEntity.badRequest().body(errors);
     }
 }
