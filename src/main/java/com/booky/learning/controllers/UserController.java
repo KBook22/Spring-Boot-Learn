@@ -24,16 +24,14 @@ public class UserController {
     @GetMapping("/user")
     public List<UserDto> getUsers() {
         return userRepository.findAll().stream()
-                .map(user -> new UserDto(user.getUsername(), user.getEmail()))
+                .map(user -> new UserDto(user.getId(), user.getUsername(), user.getEmail()))
                 .toList();
     }
 
     @GetMapping("/user/{id}")
     public UserDto getUserById(@PathVariable String id) {
-        return userRepository.findAll().stream()
-                .filter(user -> user.getId().equals(id))
+        return userRepository.findById(id)
                 .map(user -> new UserDto(user.getUsername(), user.getEmail()))
-                .findFirst()
                 .orElse(null);
     }
 
@@ -65,8 +63,7 @@ public class UserController {
 
     @DeleteMapping("/user/{id}")
     public String deleteUser(@PathVariable String id) {
-        UserModel userToDelete = userRepository.findAll().stream()
-                .filter(user -> user.getId().equals(id)).findFirst().orElse(null);
+        UserModel userToDelete = userRepository.findById(id).orElse(null);
         if (userToDelete != null) {
             userRepository.delete(userToDelete);
             return "Deleted Successfully";
