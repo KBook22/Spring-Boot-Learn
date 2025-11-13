@@ -34,3 +34,7 @@ build/
 
 ### DATABASE ###
 *.sqlite
+
+### docker ###
+Dockerfile
+docker-compose.yml
